@@ -119,10 +119,10 @@ end
 
 # remount /mnt/fuelphp
 execute "remount /mnt/fuelphp for changing permission" do
+  user "root"
   command <<-EOL
     /etc/init.d/remount-mnt-fuelphp
   EOL
-  user "root"
 end
 
 #execute "yum update" do
@@ -132,7 +132,7 @@ end
 
 # install FuelPHP if not exists
 execute "install fuelphp" do
-  command "cd /home/vagrant && oil create fuel.tmp && mv fuel.tmp/* fuelphp && mv fuel.tmp/.git* fuelphp && rmdir fuel.tmp"
-  user "vagrant"
+  command "cd /home/vagrant && oil create fuel.tmp && mv fuel.tmp/* fuelphp && mv fuel.tmp/.git* fuelphp && rm -rf fuel.tmp"
+  user "root"
   not_if { File.exists?("/home/vagrant/fuelphp/oil") }
 end
